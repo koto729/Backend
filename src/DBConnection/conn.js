@@ -6,5 +6,3 @@ mongoose.connect("mongodb+srv://koto:1234@user.prz7fn7.mongodb.net/?retryWrites=
   console.log("connection not setup")
   console.log(err)
 })
-
-("connection is setup sucessfully...")
