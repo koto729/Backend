@@ -3,7 +3,7 @@ const router = express.Router();
 const User = require('./../models/user');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const verify = require('./../controllers/verifyToken.js')
+const verify = require('./../controllers/verifyToken.js');
 
 // Route for registering a new user
 const expectedSignUpCode = "ABC123";
