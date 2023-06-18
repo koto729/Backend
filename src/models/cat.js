@@ -9,11 +9,7 @@ const catSchema = new mongoose.Schema({
   },
   image: {
     type: String,
-    required: true,
-    validate: {
-      validator: validator.isURL,
-      message: 'Invalid image URL'
-    }
+    required: true
   },
   breed: {
     type: String,
@@ -50,6 +46,6 @@ const catSchema = new mongoose.Schema({
   }
 });
 
-const Cat = new mongoose.model('Cat', catSchema);
+const Cat = mongoose.model('Cat', catSchema);
 
 module.exports = Cat;

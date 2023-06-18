@@ -4,7 +4,7 @@ const Cat = require('./../models/cat');
 const verify = require('./../controllers/verifyToken.js');
 
 //add a new cat
-router.post('/addcat', async (req, res) => {
+router.post('/addcat', verify, async (req, res) => {
   try {
     const cat = new Cat(req.body);
     await cat.save();
@@ -24,8 +24,21 @@ router.get('/cats', async (req, res) => {
   }
 });
 
+// Route to get details of a specific cat by its ID
+router.get('/cats/:id', async (req, res) => {
+  try {
+    const cat = await Cat.findById(req.params.id);
+    if (!cat) {
+      return res.status(404).json({ error: 'Cat not found' });
+    }
+    res.json(cat);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
 //update the details of  cat by ID
-router.put('/cats/:id', async (req, res) => {
+router.put('/cats/:id', verify, async (req, res) => {
   try {
     const cat = await Cat.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
@@ -40,7 +53,7 @@ router.put('/cats/:id', async (req, res) => {
 });
 
 // Route to delete a specific cat by its ID
-router.delete('/cats/:id', async (req, res) => {
+router.delete('/cats/:id', verify, async (req, res) => {
   try {
     const cat = await Cat.findByIdAndDelete(req.params.id);
     if (!cat) {
