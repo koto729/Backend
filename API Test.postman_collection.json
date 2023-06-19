@@ -1,0 +1,995 @@
+{
+	"info": {
+		"_postman_id": "b3fd7e03-5ca6-4e08-88b6-bef831116a65",
+		"name": "API Test",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "27902953"
+	},
+	"item": [
+		{
+			"name": "login test",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"JWT token is included in response headers\", function () {\r",
+							"    pm.response.to.have.header('auth-token');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response body contains a JWT token\", function () {\r",
+							"    var responseBody = pm.response.text();\r",
+							"    pm.expect(responseBody).to.be.a('string');\r",
+							"    pm.expect(responseBody).to.not.be.empty;\r",
+							"\r",
+							"    // Save the JWT token to an environment variable\r",
+							"    pm.environment.set('auth-token', responseBody);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "    {\r\n        \"email\": \"test2@example.com\",\r\n        \"password\": \"tset2\"\r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://backend.koto123.repl.co/api/login",
+					"protocol": "https",
+					"host": [
+						"backend",
+						"koto123",
+						"repl",
+						"co"
+					],
+					"path": [
+						"api",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "add a new cat test",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Added all cat details\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.have.property('name');\r",
+							"    pm.expect(jsonData).to.have.property('image');\r",
+							"    pm.expect(jsonData).to.have.property('breed');\r",
+							"    pm.expect(jsonData).to.have.property('gender');\r",
+							"    pm.expect(jsonData).to.have.property('microchipNo');\r",
+							"    pm.expect(jsonData).to.have.property('birthday');\r",
+							"    pm.expect(jsonData).to.have.property('center');\r",
+							"    pm.expect(jsonData).to.have.property('introduction');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Got Token\", function () {\r",
+							"    pm.environment.get('auth-token');\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "auth-token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDg0ODU3ZGZmMzQwZTI1MDFmNzVhMmYiLCJpYXQiOjE2ODcxNjgzNjcsImV4cCI6MTY4NzI1NDc2N30.JohhsVwtq14h93cpt5f7Yr5GkBBemSpnyZIhwpBI6iU",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"name\": \"test122\",\r\n  \"image\": \"test122.jpg\",\r\n  \"breed\": \"Siamese\",\r\n  \"gender\": \"male\",\r\n  \"microchipNo\": \"123451239\",\r\n  \"birthday\": \"2022-05-15\",\r\n  \"center\": \"Kowloon Centre\",\r\n  \"introduction\": \"test1 add cat.\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://backend.koto123.repl.co/api/addcat",
+					"protocol": "https",
+					"host": [
+						"backend",
+						"koto123",
+						"repl",
+						"co"
+					],
+					"path": [
+						"api",
+						"addcat"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update cat by id test",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response body contains updated cat details\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.be.an('object');\r",
+							"    pm.expect(jsonData).to.have.property('name');\r",
+							"    pm.expect(jsonData).to.have.property('image');\r",
+							"    pm.expect(jsonData).to.have.property('breed');\r",
+							"    pm.expect(jsonData).to.have.property('gender');\r",
+							"    pm.expect(jsonData).to.have.property('microchipNo');\r",
+							"    pm.expect(jsonData).to.have.property('birthday');\r",
+							"    pm.expect(jsonData).to.have.property('center');\r",
+							"    pm.expect(jsonData).to.have.property('introduction');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Got Token\", function () {\r",
+							"    pm.environment.get('auth-token');\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "auth-token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDg0ODU3ZGZmMzQwZTI1MDFmNzVhMmYiLCJpYXQiOjE2ODcxNjgzNjcsImV4cCI6MTY4NzI1NDc2N30.JohhsVwtq14h93cpt5f7Yr5GkBBemSpnyZIhwpBI6iU",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"test\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://backend.koto123.repl.co/api/cats/648d89a92e63e0d7acf6dbe6",
+					"protocol": "https",
+					"host": [
+						"backend",
+						"koto123",
+						"repl",
+						"co"
+					],
+					"path": [
+						"api",
+						"cats",
+						"648d89a92e63e0d7acf6dbe6"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete cat by catid test",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response body contains success message\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.be.an('object');\r",
+							"    pm.expect(jsonData).to.have.property('message');\r",
+							"    pm.expect(jsonData.message).to.equal('Cat deleted successfully');\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "auth-token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDg0ODU3ZGZmMzQwZTI1MDFmNzVhMmYiLCJpYXQiOjE2ODcxNjgzNjcsImV4cCI6MTY4NzI1NDc2N30.JohhsVwtq14h93cpt5f7Yr5GkBBemSpnyZIhwpBI6iU",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://backend.koto123.repl.co/api/cats/6490488b412a858dc3909c76",
+					"protocol": "https",
+					"host": [
+						"backend",
+						"koto123",
+						"repl",
+						"co"
+					],
+					"path": [
+						"api",
+						"cats",
+						"6490488b412a858dc3909c76"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "register a new public ac test",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Register - Status code is 201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Register - Response body contains user details\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.be.an('object');\r",
+							"    pm.expect(jsonData).to.have.property('name');\r",
+							"    pm.expect(jsonData).to.have.property('email');\r",
+							"    pm.expect(jsonData).to.have.property('role');\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"name\": \"tset1234\",\r\n  \"email\": \"test1234@example.com\",\r\n  \"password\": \"tset1234\",\r\n  \"role\": \"public\"\r\n}\r\n\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://backend.koto123.repl.co/api/register",
+					"protocol": "https",
+					"host": [
+						"backend",
+						"koto123",
+						"repl",
+						"co"
+					],
+					"path": [
+						"api",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get user by userid test",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Get user by ID - Response body contains user details\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.be.an('object');\r",
+							"    pm.expect(jsonData).to.have.property('name');\r",
+							"    pm.expect(jsonData).to.have.property('email');\r",
+							"    pm.expect(jsonData).to.have.property('role');\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "auth-token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDg0ODU3ZGZmMzQwZTI1MDFmNzVhMmYiLCJpYXQiOjE2ODcxNjgzNjcsImV4cCI6MTY4NzI1NDc2N30.JohhsVwtq14h93cpt5f7Yr5GkBBemSpnyZIhwpBI6iU",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://backend.koto123.repl.co/api/me/6484857dff340e2501f75a2f",
+					"protocol": "https",
+					"host": [
+						"backend",
+						"koto123",
+						"repl",
+						"co"
+					],
+					"path": [
+						"api",
+						"me",
+						"6484857dff340e2501f75a2f"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": "",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get all cats test",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response body is an array\", function () {\r",
+							"    pm.expect(pm.response.json()).to.be.an('array');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response body contains all cat details\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.length).to.be.above(0); // Ensure there are cats in the response\r",
+							"\r",
+							"    jsonData.forEach(function (cat) {\r",
+							"        pm.expect(cat).to.have.property('name');\r",
+							"        pm.expect(cat).to.have.property('image');\r",
+							"        pm.expect(cat).to.have.property('breed');\r",
+							"        pm.expect(cat).to.have.property('gender');\r",
+							"        pm.expect(cat).to.have.property('microchipNo');\r",
+							"        pm.expect(cat).to.have.property('birthday');\r",
+							"        pm.expect(cat).to.have.property('center');\r",
+							"        pm.expect(cat).to.have.property('introduction');\r",
+							"    });\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://backend.koto123.repl.co/api/cats",
+					"protocol": "https",
+					"host": [
+						"backend",
+						"koto123",
+						"repl",
+						"co"
+					],
+					"path": [
+						"api",
+						"cats"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get cats by Bengal Cross test",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response body is an array\", function () {\r",
+							"    pm.expect(pm.response.json()).to.be.an('array');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response body contains cats of the specified breed\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.length).to.be.above(0); // Ensure there are cats in the response\r",
+							"\r",
+							"    jsonData.forEach(function (cat) {\r",
+							"        pm.expect(cat.breed).to.eql(\"Bengal Cross\");\r",
+							"    });\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://backend.koto123.repl.co/api/cats/breed/Bengal Cross",
+					"protocol": "https",
+					"host": [
+						"backend",
+						"koto123",
+						"repl",
+						"co"
+					],
+					"path": [
+						"api",
+						"cats",
+						"breed",
+						"Bengal Cross"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get cats by Kowloon Centre test",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response body is an array\", function () {\r",
+							"    pm.expect(pm.response.json()).to.be.an('array');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response body contains cats from the specified center\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.length).to.be.above(0); // Ensure there are cats in the response\r",
+							"\r",
+							"    var expectedCenter = \"Kowloon Centre\";\r",
+							"    jsonData.forEach(function (cat) {\r",
+							"        pm.expect(cat.center).to.eql(expectedCenter);\r",
+							"    });\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://backend.koto123.repl.co/api/cats/center/Kowloon Centre",
+					"protocol": "https",
+					"host": [
+						"backend",
+						"koto123",
+						"repl",
+						"co"
+					],
+					"path": [
+						"api",
+						"cats",
+						"center",
+						"Kowloon Centre"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get cat by catid test",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response body has cat details\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.have.property('name');\r",
+							"    pm.expect(jsonData).to.have.property('image');\r",
+							"    pm.expect(jsonData).to.have.property('breed');\r",
+							"    pm.expect(jsonData).to.have.property('gender');\r",
+							"    pm.expect(jsonData).to.have.property('microchipNo');\r",
+							"    pm.expect(jsonData).to.have.property('birthday');\r",
+							"    pm.expect(jsonData).to.have.property('center');\r",
+							"    pm.expect(jsonData).to.have.property('introduction');\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://backend.koto123.repl.co/api/cats/648dc54b4224ee4153480a29",
+					"protocol": "https",
+					"host": [
+						"backend",
+						"koto123",
+						"repl",
+						"co"
+					],
+					"path": [
+						"api",
+						"cats",
+						"648dc54b4224ee4153480a29"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "addfavorite test",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Create favorite cat - Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Create favorite cat - Response body contains success message\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.be.an('object');\r",
+							"    pm.expect(jsonData).to.have.property('message', 'Cat favorited successfully');\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"userId\": \"6484847967a5ead97b4d1cb7\",\r\n  \"catId\": \"648b51f9216a502f1e62ca25\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://backend.koto123.repl.co/api/favorite",
+					"protocol": "https",
+					"host": [
+						"backend",
+						"koto123",
+						"repl",
+						"co"
+					],
+					"path": [
+						"api",
+						"favorite"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get favorite by user id test",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response body contains an array of favorite cats\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.be.an('array');\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://backend.koto123.repl.co/api/favorite/user/6484857dff340e2501f75a2f",
+					"protocol": "https",
+					"host": [
+						"backend",
+						"koto123",
+						"repl",
+						"co"
+					],
+					"path": [
+						"api",
+						"favorite",
+						"user",
+						"6484857dff340e2501f75a2f"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "check favorited test",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response body contains an array of favorite cats\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.be.an('array');\r",
+							"    // Add more assertions for individual favorite cat properties if needed\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://backend.koto123.repl.co/api/favorite/6484847967a5ead97b4d1cb7/648b51f9216a502f1e62ca25",
+					"protocol": "https",
+					"host": [
+						"backend",
+						"koto123",
+						"repl",
+						"co"
+					],
+					"path": [
+						"api",
+						"favorite",
+						"6484847967a5ead97b4d1cb7",
+						"648b51f9216a502f1e62ca25"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete favorite test",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Delete favorite cat by user ID and cat ID - Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Delete favorite cat by user ID and cat ID - Response body contains success message\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.be.an('object');\r",
+							"    pm.expect(jsonData).to.have.property('message', 'Favorite cat deleted successfully');\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://backend.koto123.repl.co/api/favorite/6484847967a5ead97b4d1cb7/648b51f9216a502f1e62ca25",
+					"protocol": "https",
+					"host": [
+						"backend",
+						"koto123",
+						"repl",
+						"co"
+					],
+					"path": [
+						"api",
+						"favorite",
+						"6484847967a5ead97b4d1cb7",
+						"648b51f9216a502f1e62ca25"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "add new chatroom",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "https://backend.koto123.repl.co/api/addchatrooms",
+					"protocol": "https",
+					"host": [
+						"backend",
+						"koto123",
+						"repl",
+						"co"
+					],
+					"path": [
+						"api",
+						"addchatrooms"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get all chatroom",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Get all chatrooms\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"    pm.response.to.be.json;\r",
+							"\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.be.an(\"array\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "auth-token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDg0ODU3ZGZmMzQwZTI1MDFmNzVhMmYiLCJpYXQiOjE2ODcxNjgzNjcsImV4cCI6MTY4NzI1NDc2N30.JohhsVwtq14h93cpt5f7Yr5GkBBemSpnyZIhwpBI6iU",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://backend.koto123.repl.co/api/chatrooms",
+					"protocol": "https",
+					"host": [
+						"backend",
+						"koto123",
+						"repl",
+						"co"
+					],
+					"path": [
+						"api",
+						"chatrooms"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "add new message",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Create new message\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"    pm.response.to.be.json;\r",
+							"\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.have.property(\"chatroom\");\r",
+							"    pm.expect(jsonData).to.have.property(\"userId\");\r",
+							"    pm.expect(jsonData).to.have.property(\"message\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "auth-token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDg0ODU3ZGZmMzQwZTI1MDFmNzVhMmYiLCJpYXQiOjE2ODcxNjgzNjcsImV4cCI6MTY4NzI1NDc2N30.JohhsVwtq14h93cpt5f7Yr5GkBBemSpnyZIhwpBI6iU",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"chatroomId\": \"6490190436a5d94e4ede4dd8\",\r\n  \"userId\": \"6484857dff340e2501f75a2f\",\r\n  \"message\": \"hiii\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://backend.koto123.repl.co/api/messages",
+					"protocol": "https",
+					"host": [
+						"backend",
+						"koto123",
+						"repl",
+						"co"
+					],
+					"path": [
+						"api",
+						"messages"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get all message by chatroomid",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Get messages by chatroom ID\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"    pm.response.to.be.json;\r",
+							"\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.be.an(\"array\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "auth-token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDg0ODU3ZGZmMzQwZTI1MDFmNzVhMmYiLCJpYXQiOjE2ODcxNjgzNjcsImV4cCI6MTY4NzI1NDc2N30.JohhsVwtq14h93cpt5f7Yr5GkBBemSpnyZIhwpBI6iU",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://backend.koto123.repl.co/api/messages/6490190436a5d94e4ede4dd8",
+					"protocol": "https",
+					"host": [
+						"backend",
+						"koto123",
+						"repl",
+						"co"
+					],
+					"path": [
+						"api",
+						"messages",
+						"6490190436a5d94e4ede4dd8"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": "",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
