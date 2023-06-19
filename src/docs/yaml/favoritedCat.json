@@ -1,0 +1,18 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "id": "/favoritedCat",
+  "title": "FavoritedCat",
+  "description": "Schema for a favorited cat object",
+  "type": "object",
+  "properties": {
+    "userId": {
+      "type": "string",
+      "required": true
+    },
+    "catId": {
+      "type": "string",
+      "required": true
+    }
+  },
+  "required": ["userId", "catId"]
+}

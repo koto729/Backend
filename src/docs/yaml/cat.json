@@ -1,0 +1,53 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "id": "/cat",
+  "title": "Cat",
+  "description": "Schema for a cat object",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "required": true,
+      "trim": true
+    },
+    "image": {
+      "type": "string",
+      "required": true
+    },
+    "breed": {
+      "type": "string",
+      "required": true,
+      "trim": true
+    },
+    "gender": {
+      "type": "string",
+      "required": true,
+      "enum": ["male", "female"]
+    },
+    "microchipNo": {
+      "type": "string",
+      "required": true,
+      "unique": true,
+      "trim": true,
+      "validate": {
+        "validator": "isNumeric",
+        "message": "Microchip number must be numeric"
+      }
+    },
+    "birthday": {
+      "type": "string",
+      "format": "date",
+      "required": true
+    },
+    "center": {
+      "type": "string",
+      "required": true,
+      "trim": true
+    },
+    "introduction": {
+      "type": "string",
+      "required": true
+    }
+  },
+  "required": ["name", "image", "breed", "gender", "microchipNo", "birthday", "center", "introduction"]
+}

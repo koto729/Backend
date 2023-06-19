@@ -1,0 +1,18 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "chatroom": {
+      "type": "string",
+      "format": "objectid"
+    },
+    "userId": {
+      "type": "string",
+      "format": "objectid"
+    },
+    "message": {
+      "type": "string"
+    }
+  },
+  "required": ["chatroom", "userId", "message"]
+}
